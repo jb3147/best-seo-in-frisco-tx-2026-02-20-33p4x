@@ -16,21 +16,36 @@
   </style>
 </head>
 <body class="antialiased bg-white text-black">
-  <!-- Header (simplified for policy page) -->
+  <!-- Header (sticky nav) -->
   <header class="sticky top-0 z-40 bg-white/90 backdrop-blur border-b border-gray-100">
     <nav class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 flex items-center justify-between h-16 md:h-20">
-      <div class="flex items-center justify-between w-full">
-        <!-- Logo -->
-        <a href="https://jb3147.github.io/best-seo-in-frisco-tx-2026-02-20-33p4x" class="flex items-center gap-2">
-          <span class="inline-flex h-9 w-9 rounded-xl bg-black text-white items-center justify-center text-lg font-heading font-bold tracking-tight">SE</span>
-          <span class="font-heading text-lg md:text-xl font-semibold tracking-tight">Best SEO In Frisco TX</span>
-        </a>
-        <!-- Back Link -->
-        <a href="https://jb3147.github.io/best-seo-in-frisco-tx-2026-02-20-33p4x" class="hover:text-black transition-colors duration-300 text-sm font-medium text-gray-700">
-          ← Back
-        </a>
+      <!-- Logo -->
+      <a href="index.html#top" class="flex items-center gap-2">
+        <img src="https://res.cloudinary.com/dbel9pnme/image/upload/v1771612237/ChatGPT_Image_Feb_20_2026_12_30_13_PM_dzgjkh.png" alt="Best SEO In Frisco TX Logo" class="h-9 w-9 rounded-xl" />
+        <span class="font-heading text-lg md:text-xl font-semibold tracking-tight">Best SEO In Frisco TX</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden md:flex items-center gap-8 text-sm font-medium text-gray-700">
+        <a href="index.html#services" class="hover:text-black transition-colors duration-300">Services</a>
+        <a href="index.html#testimonials" class="hover:text-black transition-colors duration-300">Testimonials</a>
+        <a href="index.html#cta" class="hover:text-black transition-colors duration-300">Get Started</a>
       </div>
+
+      <!-- Mobile Menu Button -->
+      <button class="mobile-menu-button md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg border border-gray-200 text-gray-700 hover:text-black hover:border-black transition-all duration-300" aria-label="Toggle navigation">
+        <i class="fas fa-bars text-lg"></i>
+      </button>
     </nav>
+
+    <!-- Mobile Menu -->
+    <div class="mobile-menu hidden md:hidden border-t border-gray-100 bg-white transition-all duration-300">
+      <div class="max-w-7xl mx-auto px-6 md:px-8 lg:px-12 py-4 space-y-2 text-sm font-medium text-gray-800">
+        <a href="index.html#services" class="block py-2 hover:text-black transition-colors duration-300">Services</a>
+        <a href="index.html#testimonials" class="block py-2 hover:text-black transition-colors duration-300">Testimonials</a>
+        <a href="index.html#cta" class="block py-2 hover:text-black transition-colors duration-300">Get Started</a>
+      </div>
+    </div>
   </header>
 
   <main id="top">
@@ -341,7 +356,58 @@
 
   <script>
     document.addEventListener('DOMContentLoaded', function() {
-      // Smooth Scroll for Anchor Links (still useful for page outline links)
+      // Mobile Menu Toggle
+      const mobileMenuButton = document.querySelector('.mobile-menu-button');
+      const mobileMenu = document.querySelector('.mobile-menu');
+      
+      if (mobileMenuButton && mobileMenu) {
+        mobileMenuButton.addEventListener('click', () => {
+          mobileMenu.classList.toggle('hidden');
+          const icon = mobileMenuButton.querySelector('i');
+          if (icon) {
+            icon.classList.toggle('fa-bars');
+            icon.classList.toggle('fa-times');
+          }
+        });
+
+        const mobileMenuLinks = mobileMenu.querySelectorAll('a');
+        mobileMenuLinks.forEach(link => {
+          link.addEventListener('click', () => {
+            mobileMenu.classList.add('hidden');
+            const icon = mobileMenuButton.querySelector('i');
+            if (icon) {
+              icon.classList.remove('fa-times');
+              icon.classList.add('fa-bars');
+            }
+          });
+        });
+      }
+
+      // FAQ Accordion Toggle (no FAQ on this page, but keep logic safe)
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach(item => {
+        const question = item.querySelector('.faq-question');
+        if (question) {
+          question.addEventListener('click', () => {
+            const answer = item.querySelector('.faq-answer');
+            const isOpen = answer && !answer.classList.contains('hidden');
+            
+            faqItems.forEach(otherItem => {
+              if (otherItem !== item) {
+                otherItem.querySelector('.faq-answer')?.classList.add('hidden');
+                otherItem.querySelector('.faq-icon')?.classList.remove('rotate-180');
+              }
+            });
+            
+            if (answer) {
+              answer.classList.toggle('hidden');
+            }
+            item.querySelector('.faq-icon')?.classList.toggle('rotate-180');
+          });
+        }
+      });
+
+      // Smooth Scroll for Anchor Links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function(e) {
           const href = this.getAttribute('href');
